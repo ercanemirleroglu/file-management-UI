@@ -2,9 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {MessageService} from "primeng/api";
 import {AuthService} from "../service/auth.service";
 import {DocumentService} from "../service/document.service";
-import {HttpHeaders} from "@angular/common/http";
-import {DocumentListResponse} from "../model/document";
-import {LoginResponse} from "../model/auth";
 
 @Component({
   providers: [MessageService],
@@ -76,5 +73,20 @@ export class AppComponent implements OnInit{
   refresh(){
     this.uploadedFiles =[]
     this.showUploadBtn = true
+  }
+
+  download(doc: any){
+    this.documentService.downloadDocument(doc.id).subscribe((res) => {
+      const file=new File([res], doc.name + doc.extension, {
+        type:'application/octet-stream',
+      })
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(file);
+      link.target = '_blank';
+      link.download = doc.name + doc.extension;
+      link.click();
+    }, error => {
+      console.log(error);
+    })
   }
 }

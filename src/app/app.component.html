@@ -174,7 +174,8 @@
           <td>{{file.extension}}</td>
           <td>{{file.size}}</td>
           <td style="width: 8rem">
-            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-danger" (click)="delete(file)"></button>
+            <button pButton pRipple type="button" icon="pi pi-download" class="p-button-success" style="margin-right: 3px;" (click)="download(file)"></button>
+            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-danger p-mr-1" style="margin-right: 3px;" (click)="delete(file)"></button>
             <p-fileUpload *ngIf="showUploadBtn" mode="basic" name="myfile[]" [multiple]="false" [chooseLabel]="''" [chooseIcon]="'pi pi-pencil'"
                           accept=".jpg, .jpeg, .png, .docx, .xlsx, .pdf" [auto]="true" (onSelect)="onUpdate($event, file)"></p-fileUpload>
         </tr>
