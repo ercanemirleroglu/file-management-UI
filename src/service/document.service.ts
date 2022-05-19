@@ -23,7 +23,7 @@ export class DocumentService {
     const headers = new HttpHeaders({
       'Accept': 'text/plain',
     })
-    return this.httpClientService.postFormData('/document/', formData, headers);
+    return this.httpClientService.postFormData('/document', formData, headers);
   }
 
   public update(id: number, files: File[]): Observable<any> {
@@ -34,7 +34,7 @@ export class DocumentService {
     const headers = new HttpHeaders({
       'Accept': 'text/plain',
     })
-    return this.httpClientService.putFormData('/document/'+id, formData, headers);
+    return this.httpClientService.putFormData('/document/' + id, formData, headers);
   }
 
   public delete(id: number): Observable<any> {

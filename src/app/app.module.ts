@@ -7,6 +7,9 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {TableModule} from "primeng/table";
 import { RouterModule, Routes } from '@angular/router';
 import {ResponseInterceptor} from "../service/app.response.interceptor";
+import {ButtonModule} from 'primeng/button';
+import {ToastModule} from "primeng/toast";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -14,11 +17,14 @@ import {ResponseInterceptor} from "../service/app.response.interceptor";
     AppComponent
   ],
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot([]),
     HttpClientModule,
-    BrowserModule,
     FileUploadModule,
-    TableModule
+    TableModule,
+    ButtonModule,
+    ToastModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true },
