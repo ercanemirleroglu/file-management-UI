@@ -126,6 +126,10 @@
     word-break: break-word;
   }
 
+  :host ::ng-deep .p-button.p-button-icon-only {
+    height: 92%;
+  }
+
   /* Responsive Styles */
   @media screen and (max-width: 767px) {
     .card-container > *:not(.circle-link) ,
@@ -170,8 +174,9 @@
           <td>{{file.extension}}</td>
           <td>{{file.size}}</td>
           <td style="width: 8rem">
-            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="delete(file)"></button>
-            <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-secondary"></button>
+            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-danger" (click)="delete(file)"></button>
+            <p-fileUpload *ngIf="showUploadBtn" mode="basic" name="myfile[]" [multiple]="false" [chooseLabel]="''" [chooseIcon]="'pi pi-pencil'"
+                          accept=".jpg, .jpeg, .png, .docx, .xlsx, .pdf" [auto]="true" (onSelect)="onUpdate($event, file)"></p-fileUpload>
         </tr>
       </ng-template>
     </p-table>

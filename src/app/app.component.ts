@@ -23,30 +23,30 @@ export class AppComponent implements OnInit{
               private documentService: DocumentService) {}
 
   onUpload(event: any) {
+    this.showUploadBtn = false
     for(let file of event.files) {
       this.uploadedFiles.push(file);
     }
     this.documentService.upload(this.uploadedFiles).subscribe(res => {
-      this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: 'Successfully Uploaded!'});
-      this.uploadedFiles =[]
+      this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: 'File uploaded successfully'});
       this.getAll()
     }, error => {
-      this.messageService.add({severity: 'error', summary: 'File Uploaded', detail: 'Not upload!'});
+      this.messageService.add({severity: 'error', summary: 'File Uploaded', detail: 'Could not upload file!'});
+      this.refresh();
     });
 
   }
 
   getAll(){
-    this.showUploadBtn = false;
+    this.showUploadBtn = false
     this.documentService.getAll().subscribe(res => {
       this.files = res;
-      this.showUploadBtn = true;
+      this.refresh();
     })
   }
 
   ngOnInit(): void {
     this.authService.login({username: 'admin', password: 'password'}).subscribe(res => {
-      var d = new LoginResponse();
       sessionStorage.setItem("jwtToken", JSON.parse(res).accessToken)
       this.getAll();
     })
@@ -54,7 +54,27 @@ export class AppComponent implements OnInit{
 
   delete(file: any) {
     this.documentService.delete(file.id).subscribe(res => {
+      this.messageService.add({severity: 'info', summary: 'File Deleted', detail: 'File has been deleted successfully'});
       this.getAll();
     })
+  }
+
+  onUpdate(event: any, file: any) {
+    this.showUploadBtn = false
+    for(let file of event.files) {
+      this.uploadedFiles.push(file);
+    }
+    this.documentService.update(file.id, this.uploadedFiles).subscribe(res => {
+      this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: 'File has been updated successfully'});
+      this.getAll()
+    }, error => {
+      this.messageService.add({severity: 'error', summary: 'File Uploaded', detail: 'Could not update file!'});
+      this.refresh()
+    });
+  }
+
+  refresh(){
+    this.uploadedFiles =[]
+    this.showUploadBtn = true
   }
 }
